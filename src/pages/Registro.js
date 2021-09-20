@@ -1,0 +1,144 @@
+import React, { useEffect, useState } from "react";
+import api from "../services/api";
+import Cabecalho from "../components/Cabecalho";
+
+const Registro = () => {
+  const [idregistro, setIdregistro] = useState("");
+  const [idvacina, setIdvacina] = useState("");
+  const [data, setData] = useState("");
+  const [vacinas, setVacinas] = useState([]);
+  const [registros, setRegistros] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      listVacina();
+      listRegistro();
+    })();
+  }, []);
+
+  const listVacina = () => {
+    api
+      .get("/vacina/list")
+      .then(({ data }) => {
+        setVacinas(data.vacinas);
+      })
+      .catch((e) => console.log(e.response.data.error[0]));
+  };
+
+  const listRegistro = () => {
+    api
+      .get("/registro/list")
+      .then(({ data }) => {
+        setRegistros(data.registros);
+      })
+      .catch((e) => console.log(e.response.data.error[0]));
+  };
+
+  const save = (e) => {
+    e.preventDefault();
+    if (!idregistro) {
+      api
+        .post("/registro/create", { idvacina, data })
+        .then(() => {
+          reset();
+          listRegistro();
+        })
+        .catch((e) => {
+          alert(e.response.data.error[0]);
+        });
+    } else {
+      api
+        .put("/registro/update", { idregistro, idvacina, data })
+        .then(() => {
+          reset();
+          listRegistro();
+        })
+        .catch((e) => {
+          alert(e.response.data.error[0]);
+        });
+    }
+  };
+
+  const remove = (e, idregistro) => {
+    e.preventDefault();
+    api
+      .delete("/registro/remove", { data: { idregistro } })
+      .then(() => {
+        listRegistro();
+      })
+      .catch((e) => {
+        alert(e.response.data.error[0]);
+      });
+  };
+
+  const reset = () => {
+    setIdregistro("");
+    setIdvacina("");
+    setData("");
+  };
+
+  return (
+    <div>
+      <Cabecalho />
+      <h4>Registro</h4>
+      <form>
+        {idregistro && (
+          <div>
+            <label>ID: {idregistro}</label>
+          </div>
+        )}
+        <div>
+          <label>Vacina</label>
+          <select
+            value={idvacina}
+            onChange={(e) => setIdvacina(e.target.value)}
+          >
+            {vacinas.map((item) => (
+              <option key={item.idvacina} value={item.idvacina}>
+                {item.nome}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label>Data</label>
+          <input value={data} onChange={(e) => setData(e.target.value)} />
+        </div>
+        <div>
+          <button onClick={save}>Criar</button>
+          <button onClick={reset}>Limpar</button>
+        </div>
+      </form>
+      {registros.length > 0 && (
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Vacina</th>
+              <th>Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            {registros.map((item) => (
+              <tr
+                key={item.idregistro}
+                onClick={() => {
+                  setIdregistro(item.idregistro);
+                  setIdvacina(item.idvacina);
+                  setData(item.data);
+                }}
+                onContextMenu={(e) => remove(e, item.idregistro)}
+              >
+                <td>{item.idregistro}</td>
+                <td>{item.vacina.nome}</td>
+                <td>{item.data}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+};
+
+export default Registro;
