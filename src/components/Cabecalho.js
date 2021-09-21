@@ -8,7 +8,7 @@ const Cabecalho = () => {
   return (
     <div className="cabecalho">
       <h3>Cadastro de vacinas</h3>
-      {profile !== "" && (
+      {profile && (
         <>
           <button onClick={handleLogout}>Logout</button>
           <button onClick={() => redirect("/registro")}>Registro</button>
@@ -16,7 +16,10 @@ const Cabecalho = () => {
         </>
       )}
       {profile === "admin" && (
-        <button onClick={() => redirect("/vacina")}>Vacina</button>
+        <>
+          <button onClick={() => redirect("/perfil")}>Perfil</button>
+          <button onClick={() => redirect("/vacina")}>Vacina</button>
+        </>
       )}
     </div>
   );

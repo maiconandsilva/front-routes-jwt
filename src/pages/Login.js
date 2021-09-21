@@ -5,7 +5,7 @@ import { Context } from "../context/AuthContext";
 
 export default function Login() {
   const { handleLogin } = useContext(Context);
-  const [mail, setMail] = useState("arley@teste.com");
+  const [mail, setMail] = useState("maria@teste.com");
   const [senha, setSenha] = useState("123456");
   const submeter = (e) => {
     e.preventDefault();

@@ -15,6 +15,7 @@ const Vacina = () => {
     (async () => {
       list();
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const list = () => {
@@ -33,7 +34,7 @@ const Vacina = () => {
       api
         .post("/vacina/create", { nome: nome.trim() })
         .then(() => {
-          reset();
+          reset(e);
           list();
         })
         .catch((e) => {
@@ -43,7 +44,7 @@ const Vacina = () => {
       api
         .put("/vacina/update", { idvacina, nome: nome.trim() })
         .then(() => {
-          reset();
+          reset(e);
           list();
         })
         .catch((e) => {
@@ -64,7 +65,8 @@ const Vacina = () => {
       });
   };
 
-  const reset = () => {
+  const reset = (e) => {
+    e.preventDefault();
     setIdvacina("");
     setNome("");
   };

@@ -17,6 +17,7 @@ const Registro = () => {
       listVacina();
       listRegistro();
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const listVacina = () => {
@@ -44,7 +45,7 @@ const Registro = () => {
       api
         .post("/registro/create", { idvacina, data })
         .then(() => {
-          reset();
+          reset(e);
           listRegistro();
         })
         .catch((e) => {
@@ -54,7 +55,7 @@ const Registro = () => {
       api
         .put("/registro/update", { idregistro, idvacina, data })
         .then(() => {
-          reset();
+          reset(e);
           listRegistro();
         })
         .catch((e) => {
@@ -75,7 +76,8 @@ const Registro = () => {
       });
   };
 
-  const reset = () => {
+  const reset = (e) => {
+    e.preventDefault();
     setIdregistro("");
     setIdvacina("");
     setData("");
