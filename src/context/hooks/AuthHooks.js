@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import api from "../../services/api";
 import history from "../../router/history";
 
-export default function useAuth() {
-  //const [authenticated, setAuthenticated] = useState(false);
-  const [perfil, setPerfil] = useState("");
-  const [loading, setLoading] = useState(true);
+export default function AuthHooks() {
+  const [profile, setProfile] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const user = localStorage.getItem("user");
@@ -14,11 +14,10 @@ export default function useAuth() {
     if (user) {
       const temp = JSON.parse(user);
       api.defaults.headers.Authorization = `Bearer ${temp.token}`;
-      setPerfil(temp.perfil);
-      //setAuthenticated(true);
+      setProfile(temp.perfil);
     }
 
-    setLoading(false);
+    setIsLoading(false);
   }, []);
 
   async function handleLogin(mail, senha) {
@@ -27,23 +26,22 @@ export default function useAuth() {
         data: { token, perfil },
       } = await api.post("/usuario/login", { mail, senha });
 
-      localStorage.setItem("user", JSON.stringify({ token, perfil }));
+      localStorage.setItem("user", JSON.stringify({ token, profile: perfil }));
       api.defaults.headers.Authorization = `Bearer ${token}`;
-      //setAuthenticated(true);
-      setPerfil(perfil);
+      setProfile(perfil);
       history.push("/registro");
+      setErrorMessage("");
     } catch (e) {
       if (e.response.data.error) {
-        console.log(e.response.data.error[0]);
+        setErrorMessage(e.response.data.error[0]);
       } else {
-        console.log("Problemas para validar os dados");
+        setErrorMessage("Problemas para validar os dados");
       }
     }
   }
 
   function handleLogout() {
-    //setAuthenticated(false);
-    setPerfil("");
+    setProfile("");
     localStorage.removeItem("user");
     api.defaults.headers.Authorization = undefined;
     history.push("/login");
@@ -54,11 +52,12 @@ export default function useAuth() {
   }
 
   return {
-    perfil,
-    //authenticated,
-    loading,
+    profile,
+    isLoading,
     handleLogin,
     handleLogout,
     redirect,
+    errorMessage,
+    setErrorMessage,
   };
 }

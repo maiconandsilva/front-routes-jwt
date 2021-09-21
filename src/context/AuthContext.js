@@ -1,19 +1,29 @@
 import React, { createContext } from "react";
 
-import useAuth from "./hooks/useAuth";
+import AuthHooks from "./hooks/AuthHooks";
 
 const Context = createContext();
 
 function AuthProvider({ children }) {
-  const { perfil, loading, handleLogin, handleLogout, redirect } = useAuth();
+  const {
+    profile,
+    isLoading,
+    handleLogin,
+    handleLogout,
+    redirect,
+    errorMessage,
+    setErrorMessage,
+  } = AuthHooks();
   return (
     <Context.Provider
       value={{
-        perfil,
-        loading,
+        profile,
+        isLoading,
         handleLogin,
         handleLogout,
         redirect,
+        errorMessage,
+        setErrorMessage,
       }}
     >
       {children}

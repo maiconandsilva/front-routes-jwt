@@ -5,19 +5,30 @@ import { Context } from "../context/AuthContext";
 
 import Login from "../pages/Login";
 import Registro from "../pages/Registro";
+import Usuario from "../pages/Usuario";
 import Vacina from "../pages/Vacina";
 
 function CustomRoute({ isAdmin, isUser, ...rest }) {
-  const { loading, perfil } = useContext(Context);
+  const { isLoading, profile } = useContext(Context);
 
-  if (loading) {
+  if (isLoading) {
     return <h3>Carregando...</h3>;
   }
-
-  if (isAdmin && perfil !== "admin") {
+  console.log(
+    "isAdmin",
+    isAdmin,
+    "isUser",
+    isUser,
+    "profile",
+    profile,
+    "isLoading",
+    isLoading,
+    rest.path
+  );
+  if (isAdmin && profile !== "admin") {
     return <Redirect to="/login" />;
   }
-  if (isUser && perfil === "") {
+  if (isUser && !profile) {
     return <Redirect to="/login" />;
   }
 
@@ -29,6 +40,7 @@ export default function Routes() {
     <Switch>
       <CustomRoute exact path="/login" component={Login} />
       <CustomRoute isUser exact path="/registro" component={Registro} />
+      <CustomRoute isUser exact path="/usuario" component={Usuario} />
       <CustomRoute isAdmin exact path="/vacina" component={Vacina} />
     </Switch>
   );

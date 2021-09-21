@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Cabecalho from "../components/Cabecalho";
+import Rodape from "../components/Rodape";
 import api from "../services/api";
+import { Context } from "../context/AuthContext";
 
 const Vacina = () => {
   const [idvacina, setIdvacina] = useState("");
   const [nome, setNome] = useState("");
   const [vacinas, setVacinas] = useState([]);
+  const { setErrorMessage } = useContext(Context);
 
   useEffect(() => {
     //chamado ao carregar o componente
@@ -18,9 +21,10 @@ const Vacina = () => {
     api
       .get("/vacina/list")
       .then(({ data }) => {
+        setErrorMessage("");
         setVacinas(data.vacinas);
       })
-      .catch((e) => console.log(e.response.data.error[0]));
+      .catch((e) => setErrorMessage(e.response.data.error[0]));
   };
 
   const save = (e) => {
@@ -33,7 +37,7 @@ const Vacina = () => {
           list();
         })
         .catch((e) => {
-          alert(e.response.data.error[0]);
+          setErrorMessage(e.response.data.error[0]);
         });
     } else {
       api
@@ -43,7 +47,7 @@ const Vacina = () => {
           list();
         })
         .catch((e) => {
-          alert(e.response.data.error[0]);
+          setErrorMessage(e.response.data.error[0]);
         });
     }
   };
@@ -56,7 +60,7 @@ const Vacina = () => {
         list();
       })
       .catch((e) => {
-        alert(e.response.data.error[0]);
+        setErrorMessage(e.response.data.error[0]);
       });
   };
 
@@ -109,6 +113,7 @@ const Vacina = () => {
           </tbody>
         </table>
       )}
+      <Rodape />
     </div>
   );
 };

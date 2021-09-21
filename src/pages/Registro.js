@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import api from "../services/api";
 import Cabecalho from "../components/Cabecalho";
+import Rodape from "../components/Rodape";
+import { Context } from "../context/AuthContext";
 
 const Registro = () => {
   const [idregistro, setIdregistro] = useState("");
@@ -8,6 +10,7 @@ const Registro = () => {
   const [data, setData] = useState("");
   const [vacinas, setVacinas] = useState([]);
   const [registros, setRegistros] = useState([]);
+  const { setErrorMessage } = useContext(Context);
 
   useEffect(() => {
     (async () => {
@@ -22,16 +25,17 @@ const Registro = () => {
       .then(({ data }) => {
         setVacinas(data.vacinas);
       })
-      .catch((e) => console.log(e.response.data.error[0]));
+      .catch((e) => setErrorMessage(e.response.data.error[0]));
   };
 
   const listRegistro = () => {
     api
       .get("/registro/list")
       .then(({ data }) => {
+        setErrorMessage("");
         setRegistros(data.registros);
       })
-      .catch((e) => console.log(e.response.data.error[0]));
+      .catch((e) => setErrorMessage(e.response.data.error[0]));
   };
 
   const save = (e) => {
@@ -44,7 +48,7 @@ const Registro = () => {
           listRegistro();
         })
         .catch((e) => {
-          alert(e.response.data.error[0]);
+          setErrorMessage(e.response.data.error[0]);
         });
     } else {
       api
@@ -54,7 +58,7 @@ const Registro = () => {
           listRegistro();
         })
         .catch((e) => {
-          alert(e.response.data.error[0]);
+          setErrorMessage(e.response.data.error[0]);
         });
     }
   };
@@ -67,7 +71,7 @@ const Registro = () => {
         listRegistro();
       })
       .catch((e) => {
-        alert(e.response.data.error[0]);
+        setErrorMessage(e.response.data.error[0]);
       });
   };
 
@@ -137,6 +141,7 @@ const Registro = () => {
           </tbody>
         </table>
       )}
+      <Rodape />
     </div>
   );
 };

@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
 import Cabecalho from "../components/Cabecalho";
+import Rodape from "../components/Rodape";
 import { Context } from "../context/AuthContext";
 
 export default function Login() {
   const { handleLogin } = useContext(Context);
-  const [mail, setMail] = useState("ar@teste.com");
+  const [mail, setMail] = useState("arley@teste.com");
   const [senha, setSenha] = useState("123456");
   const submeter = (e) => {
     e.preventDefault();
@@ -32,6 +33,7 @@ export default function Login() {
           <button type="submit">Enviar</button>
         </div>
       </form>
+      <Rodape />
     </div>
   );
 }
