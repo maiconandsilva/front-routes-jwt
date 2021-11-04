@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-import api from "../../services/api";
-import history from "../../router/history";
+import api from "../services/api";
+import history from "../router/history";
 
 export default function AuthHooks() {
   const [profile, setProfile] = useState("");
@@ -14,7 +14,7 @@ export default function AuthHooks() {
     if (user) {
       const temp = JSON.parse(user);
       api.defaults.headers.Authorization = `Bearer ${temp.token}`;
-      setProfile(temp.perfil);
+      setProfile(temp.profile);
     }
 
     setIsLoading(false);
@@ -29,8 +29,8 @@ export default function AuthHooks() {
       localStorage.setItem("user", JSON.stringify({ token, profile: perfil }));
       api.defaults.headers.Authorization = `Bearer ${token}`;
       setProfile(perfil);
-      history.push("/registro");
       setErrorMessage("");
+      history.push("/registro");
     } catch (e) {
       if (e.response.data.error) {
         setErrorMessage(e.response.data.error[0]);

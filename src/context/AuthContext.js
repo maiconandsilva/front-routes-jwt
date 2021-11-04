@@ -1,6 +1,6 @@
 import React, { createContext } from "react";
 
-import AuthHooks from "./hooks/AuthHooks";
+import AuthHooks from "./Hooks";
 
 const Context = createContext();
 

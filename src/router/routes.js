@@ -15,17 +15,7 @@ function CustomRoute({ isAdmin, isUser, ...rest }) {
   if (isLoading) {
     return <h3>Carregando...</h3>;
   }
-  console.log(
-    "isAdmin",
-    isAdmin,
-    "isUser",
-    isUser,
-    "profile",
-    profile,
-    "isLoading",
-    isLoading,
-    rest.path
-  );
+
   if (isAdmin && profile !== "admin") {
     return <Redirect to="/login" />;
   }
