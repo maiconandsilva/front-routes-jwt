@@ -84,66 +84,76 @@ const Registro = () => {
   };
 
   return (
-    <div>
-      <Cabecalho />
-      <h4>Registro</h4>
-      <form>
-        {idregistro && (
-          <div>
-            <label>ID: {idregistro}</label>
+    <div className="App-container">
+      <div className="row">
+        <Cabecalho />
+      </div>
+      <div className="row">
+        <h3>Registro</h3>
+      </div>
+      <div className="row">
+        <form>
+          {idregistro && (
+            <div>
+              <label>ID: {idregistro}</label>
+            </div>
+          )}
+          <div className="row">
+            <label>Vacina</label>
+            <select
+              value={idvacina}
+              onChange={(e) => setIdvacina(e.target.value)}
+            >
+              {vacinas.map((item) => (
+                <option key={item.idvacina} value={item.idvacina}>
+                  {item.nome}
+                </option>
+              ))}
+            </select>
           </div>
-        )}
-        <div>
-          <label>Vacina</label>
-          <select
-            value={idvacina}
-            onChange={(e) => setIdvacina(e.target.value)}
-          >
-            {vacinas.map((item) => (
-              <option key={item.idvacina} value={item.idvacina}>
-                {item.nome}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label>Data</label>
-          <input value={data} onChange={(e) => setData(e.target.value)} />
-        </div>
-        <div>
-          <button onClick={save}>Criar</button>
-          <button onClick={reset}>Limpar</button>
-        </div>
-      </form>
+          <div className="row">
+            <label>Data</label>
+            <input value={data} onChange={(e) => setData(e.target.value)} />
+          </div>
+          <div className="column">
+            <button onClick={save}>Criar</button>
+            <button onClick={reset}>Limpar</button>
+          </div>
+        </form>
+      </div>
       {registros.length > 0 && (
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Vacina</th>
-              <th>Data</th>
-            </tr>
-          </thead>
-          <tbody>
-            {registros.map((item) => (
-              <tr
-                key={item.idregistro}
-                onClick={() => {
-                  setIdregistro(item.idregistro);
-                  setIdvacina(item.idvacina);
-                  setData(item.data);
-                }}
-                onContextMenu={(e) => remove(e, item.idregistro)}
-              >
-                <td>{item.idregistro}</td>
-                <td>{item.vacina.nome}</td>
-                <td>{item.data}</td>
+        <div className="row">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Vacina</th>
+                <th>Data</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {registros.map((item) => (
+                <tr
+                  key={item.idregistro}
+                  onClick={() => {
+                    setIdregistro(item.idregistro);
+                    setIdvacina(item.idvacina);
+                    setData(item.data);
+                  }}
+                  onContextMenu={(e) => remove(e, item.idregistro)}
+                >
+                  <td>{item.idregistro}</td>
+                  <td>{item.vacina.nome}</td>
+                  <td>{item.data}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
+      <div className="row">
       <Rodape />
+    </div>
     </div>
   );
 };

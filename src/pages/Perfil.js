@@ -50,53 +50,63 @@ const Perfil = () => {
   };
 
   return (
-    <div>
-      <Cabecalho />
-      <h4>Perfil de acesso</h4>
-      <form>
-        {idusuario && (
-          <div>
-            <label>ID: {idusuario}</label>
+    <div className="App-container">
+      <div className="row">
+        <Cabecalho />
+      </div>
+      <div className="row">
+        <h4>Perfil de acesso</h4>
+      </div>
+      <div className="row">
+        <form>
+          {idusuario && (
+            <div className="row">
+              <label>ID: {idusuario}</label>
+            </div>
+          )}
+          <div className="row">
+            <label>Perfil</label>
+            <select value={perfil} onChange={(e) => setPerfil(e.target.value)}>
+              <option value=""></option>
+              <option value="admin">Administrador</option>
+              <option value="user">Usuário</option>
+            </select>
           </div>
-        )}
-        <div>
-          <label>Perfil</label>
-          <select value={perfil} onChange={(e) => setPerfil(e.target.value)}>
-            <option value=""></option>
-            <option value="admin">Administrador</option>
-            <option value="user">Usuário</option>
-          </select>
-        </div>
-        <div>
-          <button onClick={save}>Salvar</button>
-          <button onClick={reset}>Limpar</button>
-        </div>
-      </form>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>e-mail</th>
-            <th>Perfil</th>
-          </tr>
-        </thead>
-        <tbody>
-          {usuarios.map((item) => (
-            <tr
-              key={item.idusuario}
-              onClick={() => {
-                setIdusuario(item.idusuario);
-                setPerfil(item.perfil);
-              }}
-            >
-              <td>{item.idusuario}</td>
-              <td>{item.mail}</td>
-              <td>{item.perfil}</td>
+          <div className="column">
+            <button onClick={save}>Salvar</button>
+            <button onClick={reset}>Limpar</button>
+          </div>
+        </form>
+      </div>
+      <div className="row">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>e-mail</th>
+              <th>Perfil</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {usuarios.map((item) => (
+              <tr
+                key={item.idusuario}
+                onClick={() => {
+                  setIdusuario(item.idusuario);
+                  setPerfil(item.perfil);
+                }}
+              >
+                <td>{item.idusuario}</td>
+                <td>{item.mail}</td>
+                <td>{item.perfil}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="row">
       <Rodape />
+    </div>
     </div>
   );
 };

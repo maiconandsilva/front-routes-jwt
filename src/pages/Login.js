@@ -13,15 +13,19 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <Cabecalho />
-      <h4>Login </h4>
+    <div className="App-container">
+      <div className="row">
+        <Cabecalho />
+      </div>
+      <div className="row">
+        <h4>Login </h4>
+      </div>
       <form onSubmit={submeter}>
-        <div>
+        <div className="row">
           <label>e-mail</label>
           <input value={mail} onChange={(e) => setMail(e.target.value)} />
         </div>
-        <div>
+        <div className="row">
           <label>Senha</label>
           <input
             type="password"
@@ -29,11 +33,13 @@ export default function Login() {
             onChange={(e) => setSenha(e.target.value)}
           />
         </div>
-        <div>
+        <div className="row">
           <button type="submit">Enviar</button>
         </div>
       </form>
-      <Rodape />
+      <div className="row">
+        <Rodape />
+      </div>
     </div>
   );
 }

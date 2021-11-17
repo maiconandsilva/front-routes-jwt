@@ -38,16 +38,20 @@ const Usuario = () => {
   };
 
   return (
-    <div>
-      <Cabecalho />
-      <h4>Seus dados de acesso</h4>
+    <div className="App-container">
+      <div className="row">
+        <Cabecalho />
+      </div>
+      <div className="row">
+        <h3>Seus dados de acesso</h3>
+      </div>
       <form>
-        <div>
+        <div className="row">
           <label>e-mail</label>
           <input value={mail} onChange={(e) => setMail(e.target.value)} />
           <button onClick={updateMail}>Alterar</button>
         </div>
-        <div>
+        <div className="row">
           <label>Senha</label>
           <input
             type="password"
@@ -57,7 +61,9 @@ const Usuario = () => {
           <button onClick={updateSenha}>Alterar</button>
         </div>
       </form>
-      <Rodape />
+      <div className="row">
+        <Rodape />
+      </div>
     </div>
   );
 };

@@ -72,50 +72,58 @@ const Vacina = () => {
   };
 
   return (
-    <div>
-      <Cabecalho />
-      <h4>Vacina</h4>
+    <div className="App-container">
+      <div className="row">
+        <Cabecalho />
+      </div>
+      <div className="row">
+        <h3>Vacina</h3>
+      </div>
       <form>
         {idvacina && (
           <div>
             <label>ID: {idvacina}</label>
           </div>
         )}
-        <div>
+        <div className="row">
           <label>Nome</label>
           <input value={nome} onChange={(e) => setNome(e.target.value)} />
         </div>
-        <div>
+        <div className="column grouped-buttons">
           <button onClick={save}>Salvar</button>
           <button onClick={reset}>Limpar</button>
         </div>
       </form>
       {vacinas.length > 0 && (
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nome</th>
-            </tr>
-          </thead>
-          <tbody>
-            {vacinas.map((item) => (
-              <tr
-                key={item.idvacina}
-                onClick={() => {
-                  setIdvacina(item.idvacina);
-                  setNome(item.nome);
-                }}
-                onContextMenu={(e) => remove(e, item.idvacina)}
-              >
-                <td>{item.idvacina}</td>
-                <td>{item.nome}</td>
+        <div className="row">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {vacinas.map((item) => (
+                <tr
+                  key={item.idvacina}
+                  onClick={() => {
+                    setIdvacina(item.idvacina);
+                    setNome(item.nome);
+                  }}
+                  onContextMenu={(e) => remove(e, item.idvacina)}
+                >
+                  <td>{item.idvacina}</td>
+                  <td>{item.nome}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
-      <Rodape />
+      <div className="row">
+        <Rodape />
+      </div>
     </div>
   );
 };

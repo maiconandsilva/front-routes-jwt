@@ -1,5 +1,6 @@
 import React from "react";
 import { Router } from "react-router-dom";
+import "normalize.css/normalize.css"
 import "./App.css";
 
 import Routes from "./router/routes";
@@ -9,11 +10,13 @@ import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
-    <AuthProvider>
-      <Router history={history}>
-        <Routes />
-      </Router>
-    </AuthProvider>
+      <div className="App">
+        <AuthProvider>
+          <Router history={history}>
+            <Routes />
+          </Router>
+        </AuthProvider>
+      </div>
   );
 }
 
